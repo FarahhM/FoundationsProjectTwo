@@ -2,7 +2,7 @@
 from data import stores
 from components import Cart
 
-site_name = "ShopNow"  
+site_name = "www.ShopNow.com"  
 
 def welcome():
     print("Welcome to %s \n These are all the available stores in our website. You can checkout only once!: " %site_name)
@@ -21,8 +21,7 @@ def get_store(store_name):
     for store in stores:
         if store_name.lower() == store.name.lower():
             return store
-        else:
-            return False
+    return False
         
 
 def pick_store():
@@ -36,43 +35,51 @@ def pick_store():
     
     while store_name.lower()!="checkout":
 
+        
         picked_store=get_store(store_name)
         if picked_store==False:
             print("There's no available store with that name. Please try again.")
             store_name=input()
         else:
             return picked_store
-    return False
-   
+    return "checkout"       
+    
     
         
 def pick_products(cart, picked_store):
     """
     prints list of products and prompts user to add products to card.
     """
+    #picked_store.print_products()
     your_choice=input("Pick the items you would like to add in your cart by following the exact spelling.\n Type 'back' to go back to the main menu where you can checkout\n")
     while your_choice.lower() != "back":
+        
         for product in picked_store.products:
             if your_choice.lower() == product.name.lower():
                 cart.add_to_cart(product)
                 your_choice=input()
-            else:
-                your_choice=input()
-    return pick_store()
+                   
 
 
 def shop():
     """
     The main shopping functionality
     """
+    #you need to loop here!!
+    
     cart = Cart()
-    picked_store=pick_store()
-    if picked_store==False:
-        cart.checkout()
-    else:
-        picked_store.print_products()
-        pick_products(cart,picked_store)
-        cart.checkout()
+    cond=True
+    
+    while cond:
+        picked_store=pick_store()
+        if picked_store== "checkout":
+        #cart.checkout()  
+            cond=False
+            #break 
+        else:
+            picked_store.print_products()
+            pick_products(cart,picked_store)
+    cart.checkout()
      
 
 def thank_you():

@@ -70,7 +70,7 @@ class Cart():
         print("-----------------------------------")
         print("Your detailed receipt will be:\n")
         for product in self.products:
-            print( "%s " % product)
+            print(product)
         print("your total price will be: \n %s KD" % self.get_total_price())
 
 
